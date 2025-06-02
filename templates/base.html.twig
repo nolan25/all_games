@@ -39,6 +39,13 @@
             >A propos</a
           >
           <a class="mr-5 hover:text-white" href="#">Contact</a>
+          {% if is_granted('ROLE_ADMIN') %}
+          <a
+            class="inline-flex items-center bg-gray-800 border-0 py-2 px-3 ml-10 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"
+            href="{{ path('admin') }}"
+            >Admin</a
+          >
+          {% endif %}
         </nav>
 
         <div
@@ -60,11 +67,25 @@
           </button>
         </div>
 
+        {#
         <a
           class="inline-flex items-center bg-gray-800 border-0 py-2 px-3 ml-10 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"
           href="#"
           >Login
         </a>
+        #} {% if app.user %}
+        <a
+          class="inline-flex items-center bg-gray-800 border-0 py-2 px-3 ml-10 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"
+          href="{{ path('app_logout') }}"
+          >Déconnexion</a
+        >
+        {% else %}
+        <a
+          class="inline-flex items-center bg-gray-800 border-0 py-2 px-3 ml-10 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"
+          href="{{ path('app_login') }}"
+          >Connexion
+        </a>
+        {% endif %}
       </div>
     </header>
 
