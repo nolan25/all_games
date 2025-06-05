@@ -6,9 +6,11 @@ use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 class Review
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -47,6 +49,16 @@ class Review
 
         return $this;
     }
+
+    #[ORM\PrePersist]    
+public function setCreatedAtValue(): static
+    {
+        $this->createAt = new \DateTimeImmutable();
+
+
+        return $this;
+    }
+
 
     public function getCreateAt(): ?\DateTimeImmutable
     {

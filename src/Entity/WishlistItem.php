@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\WishlistItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: WishlistItemRepository::class)]
 class WishlistItem
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -33,6 +35,16 @@ class WishlistItem
     {
         return $this->createdAt;
     }
+     
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): static
+    {
+        $this->createdAt = new \DateTimeImmutable();
+
+
+        return $this;
+    }
+
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
